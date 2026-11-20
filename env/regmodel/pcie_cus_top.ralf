@@ -1,0 +1,34 @@
+system pcie_cus_top {
+    endian little;
+    bytes 4;
+
+    block core_x1 @ 'h1000 {
+         bytes 4;
+        source "core_x1_x2.ralf";
+    }
+
+    block core_x2 @ 'h2000 {
+         bytes 4;
+        source "core_x1_x2.ralf";
+    }
+
+    block core_x4_0 @ 'h3000 {
+         bytes 4;
+        source "core_x4.ralf";
+    }
+
+    block core_x4_1 @ 'h4000 {
+         bytes 4;
+        source "core_x4.ralf";
+    }
+
+    block sub_shared @ 'h0 {
+        bytes 4;
+        source "sub_shared.ralf";
+    }
+
+    block sub_direct @ 'h5000 {
+        bytes 4;
+        source "sub_direct.ralf";
+    }
+}

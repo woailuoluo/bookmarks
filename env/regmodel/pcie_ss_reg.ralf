@@ -1,0 +1,179 @@
+block pcie_ss_reg {
+    endian little;
+    bytes 4;
+
+    register CRG_SOFT_RESET_CTRL @ 'h000 {
+        field ni_soft_reset_req @0 { bits 1; access rw; reset 1'h0; }
+        field rsv @1 { bits 31; access ro; reset 31'h0; }
+    }
+
+    register CRG_CLK_GATE_CTRL @ 'h004 {
+        field ni_clk_gate_req @0 { bits 1; access rw; reset 1'h0; }
+        field rsv @1 { bits 31; access ro; reset 31'h0; }
+    }
+
+    register CRG_CLK_DIV_CTRL @ 'h008 {
+        field fixed_divide_by_one @0 { bits 8; access ro; reset 8'h1; }
+        field rsv @8 { bits 24; access ro; reset 24'h0; }
+    }
+
+    register MSI0_TRANSLATOR_PAGE @ 'h00C {
+        field msi0_translator_page @0 { bits 32; access rw; reset 32'h0; }
+    }
+
+    register MSI0_MSI64_TRANS_PAGE @ 'h010 {
+        field msi0_msi64_translator_page @0 { bits 32; access rw; reset 32'h0; }
+    }
+
+    register MSI0_DEVICEID @ 'h014 {
+        field msi0_awdeviceid @0 { bits 8; access rw; reset 8'h0; }
+        field rsv @8 { bits 24; access ro; reset 24'h0; }
+    }
+
+    register MSI1_TRANSLATOR_PAGE @ 'h018 {
+        field msi1_translator_page @0 { bits 32; access rw; reset 32'h0; }
+    }
+
+    register MSI1_MSI64_TRANS_PAGE @ 'h01C {
+        field msi1_msi64_translator_page @0 { bits 32; access rw; reset 32'h0; }
+    }
+
+    register MSI1_DEVICEID @ 'h020 {
+        field msi1_awdeviceid @0 { bits 8; access rw; reset 8'h0; }
+        field rsv @8 { bits 24; access ro; reset 24'h0; }
+    }
+
+    register ITS0_FAULT_INJECT @ 'h024 {
+        field its0_fault_icidi @0 { bits 1; access rw; reset 1'h0; }
+        field its0_fault_icidi_chk @1 { bits 1; access rw; reset 1'h0; }
+        field its0_fault_qchannel @2 { bits 1; access rw; reset 1'h0; }
+        field its0_fault_qchannel_chk @3 { bits 1; access rw; reset 1'h0; }
+        field its0_fault_external @4 { bits 1; access rw; reset 1'h0; }
+        field its0_fault_external_chk @5 { bits 1; access rw; reset 1'h0; }
+        field its0_usr0_err @6 { bits 1; access rw; reset 1'h0; }
+        field its0_usr1_err @7 { bits 1; access rw; reset 1'h0; }
+        field rsv @8 { bits 24; access ro; reset 24'h0; }
+    }
+
+    register ITS1_FAULT_INJECT @ 'h028 {
+        field its1_fault_icidi @0 { bits 1; access rw; reset 1'h0; }
+        field its1_fault_icidi_chk @1 { bits 1; access rw; reset 1'h0; }
+        field its1_fault_qchannel @2 { bits 1; access rw; reset 1'h0; }
+        field its1_fault_qchannel_chk @3 { bits 1; access rw; reset 1'h0; }
+        field its1_fault_external @4 { bits 1; access rw; reset 1'h0; }
+        field its1_fault_external_chk @5 { bits 1; access rw; reset 1'h0; }
+        field its1_usr0_err @6 { bits 1; access rw; reset 1'h0; }
+        field its1_usr1_err @7 { bits 1; access rw; reset 1'h0; }
+        field rsv @8 { bits 24; access ro; reset 24'h0; }
+    }
+
+    register DTIM_X1_TIMEOUT_INFO @ 'h02C {
+        field dtim_x1_timeout_valid @0 { bits 1; access rw; reset 1'h0; }
+        field dtim_x1_timeout_sid @1 { bits 16; access ro; reset 16'h0; }
+        field dtim_x1_timeout_itag @17 { bits 5; access ro; reset 5'h0; }
+        field rsv @22 { bits 10; access ro; reset 10'h0; }
+    }
+
+    register DTIM_X2_TIMEOUT_INFO @ 'h030 {
+        field dtim_x2_timeout_valid @0 { bits 1; access rw; reset 1'h0; }
+        field dtim_x2_timeout_sid @1 { bits 16; access ro; reset 16'h0; }
+        field dtim_x2_timeout_itag @17 { bits 5; access ro; reset 5'h0; }
+        field rsv @22 { bits 10; access ro; reset 10'h0; }
+    }
+
+    register DTIM_X4_0_TIMEOUT_INFO @ 'h034 {
+        field dtim_x4_0_timeout_valid @0 { bits 1; access rw; reset 1'h0; }
+        field dtim_x4_0_timeout_sid @1 { bits 16; access ro; reset 16'h0; }
+        field dtim_x4_0_timeout_itag @17 { bits 5; access ro; reset 5'h0; }
+        field rsv @22 { bits 10; access ro; reset 10'h0; }
+    }
+
+    register DTIM_X4_1_TIMEOUT_INFO @ 'h038 {
+        field dtim_x4_1_timeout_valid @0 { bits 1; access rw; reset 1'h0; }
+        field dtim_x4_1_timeout_sid @1 { bits 16; access ro; reset 16'h0; }
+        field dtim_x4_1_timeout_itag @17 { bits 5; access ro; reset 5'h0; }
+        field rsv @22 { bits 10; access ro; reset 10'h0; }
+    }
+
+    register APB_DIV_CLK_COUNTER @'h03c {
+        field apb_div_clk_counter @0 {
+            bits 32;
+            access ro;
+            reset 32'h0;
+        }
+    }
+    
+    register ITS_ACEL_BYPASS_CTRL @'h040 {
+        field its0_acel_bypass @0 { bits 1; access rw; reset 1'h1; }
+        field its1_acel_bypass @1 { bits 1; access rw; reset 1'h1; }
+        field rsv @2 {
+            bits 30;
+            access ro;
+            reset 30'h0;
+        }
+    }
+    
+    register RESERVED_044 @'h044 {
+        field rsv @0 {
+            bits 32;
+            access ro;
+            reset 32'h0;
+        }
+    }
+    
+    register RESERVED_048 @'h048 {
+        field rsv @0 {
+            bits 32;
+            access ro;
+            reset 32'h0;
+        }
+    }
+    
+    register RESERVED_04C @'h04c {
+        field rsv @0 {
+            bits 32;
+            access ro;
+            reset 32'h0;
+        }
+    }
+
+    register TZC_CTRL @ 'h050 {
+        field tzc_bypass @0 { bits 1; access rw; reset 1'h0; }
+        field tzc_bypass_lock @1 { bits 1; access rw; reset 1'h0; }
+        field rsv @2 { bits 30; access ro; reset 30'h0; }
+    }
+
+    register SMMU0_SID_CFG @ 'h064 {
+        field smmu0_sid_cfg @0 { bits 24; access rw; reset 24'h0; }
+        field rsv @24 { bits 8; access ro; reset 8'h0; }
+    }
+
+    register SMMU1_SID_CFG @ 'h068 {
+        field smmu1_sid_cfg @0 { bits 24; access rw; reset 24'h0; }
+        field rsv @24 { bits 8; access ro; reset 8'h0; }
+    }
+
+    register SMMU_SID_CTRL @ 'h06C {
+        field smmu_sid_cfg_done @0 { bits 2; access rw; reset 2'h0; } 
+        field rsv_0 @2 { bits 6; access ro; reset 6'h0; }
+        field smmu_sid_cfg_lock @8 { bits 1; access rw; reset 1'h0; }
+        field rsv_1 @9 { bits 23; access ro; reset 23'h0; }
+    }
+
+    register SMMU_SID_STATUS @ 'h070 {
+        field smmu_sid_cfg_done_status @0 { bits 2; access ro; reset 2'h0; }
+        field rsv_0 @2 { bits 6; access ro; reset 6'h0; }
+        field smmu_sid_cfg_lock_status @8 { bits 1; access ro; reset 1'h0; }
+        field smmu_sid_values_equal @9 { bits 1; access ro; reset 1'h1; }
+        field smmu_sid_cfg_error_sticky @10 { bits 1; access rw; reset 1'h0; }
+        field smmu_sid_blocked_sticky @11 { bits 2; access rw; reset 2'h0; }
+        field rsv_1 @13 { bits 1; access ro; reset 1'h0; }
+        field smmu_sid_datapath_enable @15 { bits 1; access ro; reset 1'h0; }
+        field rsv_2 @16 { bits 16; access ro; reset 16'h0; }
+    }
+}
+
+system pcie_ss_reg_top {
+    bytes 4;
+    block pcie_ss_reg @'h0;
+}

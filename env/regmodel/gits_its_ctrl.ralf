@@ -1,0 +1,335 @@
+# ============================================================
+# GIC-600AE ITS Control Register RALF
+# Based on TRM Chapter 4.6 "ITS control register summary"
+# 64-bit registers split into 2 x 32-bit registers (Little-Endian)
+# Low 32-bit @ offset+0x0, High 32-bit @ offset+0x4
+# ============================================================
+
+block gits_its_ctrl {
+    bytes 4;
+    endian little;
+
+    # ============================================================
+    # 0x0000: GITS_CTLR - ITS Control Register (RW, 32-bit, Reset 0x80000000)
+    # ============================================================
+    register GITS_CTLR @0x0000 {
+        bytes 4;
+        field ENABLED       @0    { bits 1; }   # bit[0]
+        field RESERVED_1    @1    { bits 30; }
+        field QUIESCENT     @31   { bits 1; }   # bit[31]
+    }
+
+    # ============================================================
+    # 0x0004: GITS_HDR - ITS Implementer Identification Register (RO, 32-bit)
+    # ============================================================
+    register GITS_HDR @0x0004 {
+        bytes 4;
+        field RESERVED      @0    { bits 32; }
+    }
+
+    # ============================================================
+    # 0x0008: GITS_TYPER - ITS Type Register (RO, 64-bit)
+    # Split into GITS_TYPER_LO (0x0008) and GITS_TYPER_HI (0x000C)
+    # ============================================================
+    register GITS_TYPER_LO @0x0008 {
+        bytes 4;
+        field PHYSICAL      @0    { bits 1; }   # bit[0]
+        field VIRTUAL       @1    { bits 1; }   # bit[1]
+        field CCT           @2    { bits 1; }   # bit[2]
+        field RESERVED_2    @3    { bits 1; }   # bit[3]
+        field ITT_ENTRY_SIZE @4   { bits 4; }   # bits[7:4]
+        field IDBITS        @8    { bits 5; }   # bits[12:8]
+        field DEVBITS       @13   { bits 5; }   # bits[17:13]
+        field SEIS          @18   { bits 1; }   # bit[18]
+        field PTA           @19   { bits 1; }   # bit[19]
+        field RESERVED_3    @20   { bits 4; }   # bits[23:20]
+        field HCC           @24   { bits 8; }   # bits[31:24]
+    }
+    register GITS_TYPER_HI @0x000C {
+        bytes 4;
+        field CIDBITS       @0    { bits 4; }   # bits[35:32]
+        field CIL           @4    { bits 1; }   # bit[36]
+        field RESERVED_4    @5    { bits 27; }  # bits[63:37]
+    }
+
+    # ============================================================
+    # 0x0020: GITS_FCTLR - Function Control Register (RW, 32-bit, Reset 0x0)
+    # ============================================================
+    register GITS_FCTLR @0x0020 {
+        bytes 4;
+        field SIP           @0    { bits 1; }   # bit[0]
+        field LTE           @1    { bits 1; }   # bit[1]
+        field UEE           @2    { bits 1; }   # bit[2]
+        field CEE           @3    { bits 1; }   # bit[3]
+        field CGO           @4    { bits 4; }   # bits[7:4]
+        field AEE           @8    { bits 1; }   # bit[8]
+        field QD            @9    { bits 1; }   # bit[9]
+        field RESERVED_5    @10   { bits 1; }   # bit[10]
+        field DMA           @11   { bits 1; }   # bit[11]
+        field RESERVED_6    @12   { bits 4; }   # bits[15:12]
+        field ICC           @16   { bits 1; }   # bit[16]
+        field IDC           @17   { bits 1; }   # bit[17]
+        field IEC           @18   { bits 1; }   # bit[18]
+        field RESERVED_7    @19   { bits 11; }  # bits[29:19]
+        field PWE           @30   { bits 1; }   # bit[30]
+        field DCC           @31   { bits 1; }   # bit[31]
+    }
+
+    # ============================================================
+    # 0x0028: GITS_OPR - Operations Register (RW, 64-bit, Reset 0x0)
+    # Split into GITS_OPR_LO (0x0028) and GITS_OPR_HI (0x002C)
+    # ============================================================
+    register GITS_OPR_LO @0x0028 {
+        bytes 4;
+        field EVENT_ID      @0    { bits 16; }  # bits[15:0]
+        field RESERVED_8    @16   { bits 16; }  # bits[31:16]
+    }
+    register GITS_OPR_HI @0x002C {
+        bytes 4;
+        field DEVICE_ID     @0    { bits 20; }  # bits[51:32]
+        field RESERVED_9    @20   { bits 8; }   # bits[59:52]
+        field LOCK_TYPE     @28   { bits 4; }   # bits[63:60]
+    }
+
+    # ============================================================
+    # 0x0030: GITS_OPSR - Operation Status Register (RO, 64-bit, Reset 0x0)
+    # Split into GITS_OPSR_LO (0x0030) and GITS_OPSR_HI (0x0034)
+    # ============================================================
+    register GITS_OPSR_LO @0x0030 {
+        bytes 4;
+        field PID           @0    { bits 16; }  # bits[15:0]
+        field RESERVED_10   @16   { bits 16; }  # bits[31:16]
+    }
+    register GITS_OPSR_HI @0x0034 {
+        bytes 4;
+        field TARGET        @0    { bits 13; }  # bits[44:32]
+        field RESERVED_11   @13   { bits 3; }   # bits[47:45]
+        field ENTRY_LOCKED  @16   { bits 1; }   # bit[48]
+        field RESERVED_12   @17   { bits 12; }  # bits[60:49]
+        field REQUEST_IN_PROGRESS @29 { bits 1; } # bit[61]
+        field REQUEST_PASS  @30   { bits 1; }   # bit[62]
+        field REQUEST_COMPLETE @31 { bits 1; }  # bit[63]
+    }
+
+    # ============================================================
+    # 0x0080: GITS_CBASER - Command Queue Control Register (RW, 64-bit, Reset 0x0)
+    # Split into GITS_CBASER_LO (0x0080) and GITS_CBASER_HI (0x0084)
+    # ============================================================
+    register GITS_CBASER_LO @0x0080 {
+        bytes 4;
+        field RESERVED_13   @0    { bits 12; }  # bits[11:0]
+        field SIZE          @12   { bits 8; }   # bits[19:12]
+        field RESERVED_14   @20   { bits 12; }  # bits[31:20]
+    }
+    register GITS_CBASER_HI @0x0084 {
+        bytes 4;
+        field ADDR          @0    { bits 28; }  # bits[59:32]
+        field RESERVED_15   @28   { bits 4; }   # bits[63:60]
+    }
+
+    # ============================================================
+    # 0x0088: GITS_CWRITER - Command Queue Write Pointer Register (RW, 64-bit, Reset 0x0)
+    # Split into GITS_CWRITER_LO (0x0088) and GITS_CWRITER_HI (0x008C)
+    # ============================================================
+    register GITS_CWRITER_LO @0x0088 {
+        bytes 4;
+        field OFFSET        @0    { bits 20; }  # bits[19:0]
+        field RESERVED_16   @20   { bits 12; }  # bits[31:20]
+    }
+    register GITS_CWRITER_HI @0x008C {
+        bytes 4;
+        field RESERVED_17   @0    { bits 32; }  # bits[63:32]
+    }
+
+    # ============================================================
+    # 0x0090: GITS_CREADR - Command Queue Read Pointer Register (RO, 64-bit, Reset 0x0)
+    # Split into GITS_CREADR_LO (0x0090) and GITS_CREADR_HI (0x0094)
+    # ============================================================
+    register GITS_CREADR_LO @0x0090 {
+        bytes 4;
+        field OFFSET        @0    { bits 20; }  # bits[19:0]
+        field RESERVED_18   @20   { bits 11; }  # bits[30:20]
+        field STALLED       @31   { bits 1; }   # bit[31]
+    }
+    register GITS_CREADR_HI @0x0094 {
+        bytes 4;
+        field RESERVED_19   @0    { bits 32; }  # bits[63:32]
+    }
+
+    # ============================================================
+    # 0x0100: GITS_BASER0 - ITS Translation Table Descriptor Register 0 (RW, 64-bit, Reset 0x0107000000000000)
+    # Split into GITS_BASER0_LO (0x0100) and GITS_BASER0_HI (0x0104)
+    # ============================================================
+    register GITS_BASER0_LO @0x0100 {
+        bytes 4;
+        field TYPE          @0    { bits 3; }   # bits[2:0]
+        field INDIRECT      @3    { bits 1; }   # bit[3]
+        field RESERVED_20   @4    { bits 4; }   # bits[7:4]
+        field PAGESIZE      @8    { bits 6; }   # bits[13:8]
+        field RESERVED_21   @14   { bits 2; }   # bits[15:14]
+        field SHAREABILITY  @16   { bits 2; }   # bits[17:16]
+        field RESERVED_22   @18   { bits 2; }   # bits[19:18]
+        field OUTERCACHE    @20   { bits 4; }   # bits[23:20]
+        field RESERVED_23   @24   { bits 8; }   # bits[31:24]
+    }
+    register GITS_BASER0_HI @0x0104 {
+        bytes 4;
+        field PHYSICAL_ADDR @0    { bits 28; }  # bits[59:32]
+        field RESERVED_24   @28   { bits 4; }   # bits[63:60]
+    }
+
+    # ============================================================
+    # 0x0108: GITS_BASER1 - ITS Translation Table Descriptor Register 1 (RW, 64-bit, Reset 0x0)
+    # Split into GITS_BASER1_LO (0x0108) and GITS_BASER1_HI (0x010C)
+    # ============================================================
+    register GITS_BASER1_LO @0x0108 {
+        bytes 4;
+        field TYPE          @0    { bits 3; }   # bits[2:0]
+        field INDIRECT      @3    { bits 1; }   # bit[3]
+        field RESERVED_25   @4    { bits 4; }   # bits[7:4]
+        field PAGESIZE      @8    { bits 6; }   # bits[13:8]
+        field RESERVED_26   @14   { bits 2; }   # bits[15:14]
+        field SHAREABILITY  @16   { bits 2; }   # bits[17:16]
+        field RESERVED_27   @18   { bits 2; }   # bits[19:18]
+        field OUTERCACHE    @20   { bits 4; }   # bits[23:20]
+        field RESERVED_28   @24   { bits 8; }   # bits[31:24]
+    }
+    register GITS_BASER1_HI @0x010C {
+        bytes 4;
+        field PHYSICAL_ADDR @0    { bits 28; }  # bits[59:32]
+        field RESERVED_29   @28   { bits 4; }   # bits[63:60]
+    }
+
+    # ============================================================
+    # 0xF000: GITS_CFGID - Configuration ID Register (RO, 32-bit)
+    # ============================================================
+    register GITS_CFGID @0xF000 {
+        bytes 4;
+        field ITS_NUMBER    @0    { bits 8; }   # bits[7:0]
+        field LPI_CREDIT_COUNT @8 { bits 4; }   # bits[11:8]
+        field TARGET_BITS   @12   { bits 4; }   # bits[15:12]
+        field MSI_64        @16   { bits 1; }   # bit[16]
+        field LOW_LATENCY_SUPPORT @17 { bits 1; } # bit[17]
+        field CACHE_ECC     @18   { bits 1; }   # bit[18]
+        field RESERVED_30   @19   { bits 1; }   # bit[19]
+        field COLLECTION_CACHE_INDEX_BITS @20 { bits 4; } # bits[23:20]
+        field DEVICE_CACHE_INDEX_BITS @24 { bits 4; }     # bits[27:24]
+        field EVENT_CACHE_INDEX_BITS @28 { bits 4; }      # bits[31:28]
+    }
+
+    # ============================================================
+    # 0xFFD0: GITS_PIDR4 - Peripheral ID 4 Register (RO, 32-bit, Reset 0x44)
+    # ============================================================
+    register GITS_PIDR4 @0xFFD0 {
+        bytes 4;
+        field DES_2         @0    { bits 4; }   # bits[3:0]
+        field SIZE          @4    { bits 4; }   # bits[7:4]
+        field RESERVED_31   @8    { bits 24; }  # bits[31:8]
+    }
+
+    # ============================================================
+    # 0xFFD4: GITS_PIDR5 - Peripheral ID 5 Register (RO, 32-bit, Reset 0x00)
+    # ============================================================
+    register GITS_PIDR5 @0xFFD4 {
+        bytes 4;
+        field RESERVED_32   @0    { bits 32; }
+    }
+
+    # ============================================================
+    # 0xFFD8: GITS_PIDR6 - Peripheral ID 6 Register (RO, 32-bit, Reset 0x00)
+    # ============================================================
+    register GITS_PIDR6 @0xFFD8 {
+        bytes 4;
+        field RESERVED_33   @0    { bits 32; }
+    }
+
+    # ============================================================
+    # 0xFFDC: GITS_PIDR7 - Peripheral ID 7 Register (RO, 32-bit, Reset 0x00)
+    # ============================================================
+    register GITS_PIDR7 @0xFFDC {
+        bytes 4;
+        field RESERVED_34   @0    { bits 32; }
+    }
+
+    # ============================================================
+    # 0xFFE0: GITS_PIDR0 - Peripheral ID 0 Register (RO, 32-bit, Reset 0x94)
+    # ============================================================
+    register GITS_PIDR0 @0xFFE0 {
+        bytes 4;
+        field PART_0        @0    { bits 8; }   # bits[7:0]
+        field RESERVED_35   @8    { bits 24; }  # bits[31:8]
+    }
+
+    # ============================================================
+    # 0xFFE4: GITS_PIDR1 - Peripheral ID 1 Register (RO, 32-bit, Reset 0x84)
+    # ============================================================
+    register GITS_PIDR1 @0xFFE4 {
+        bytes 4;
+        field PART_1        @0    { bits 4; }   # bits[3:0]
+        field DES_0         @4    { bits 4; }   # bits[7:4]
+        field RESERVED_36   @8    { bits 24; }  # bits[31:8]
+    }
+
+    # ============================================================
+    # 0xFFE8: GITS_PIDR2 - Peripheral ID 2 Register (RO, 32-bit, Reset 0x3B)
+    # ============================================================
+    register GITS_PIDR2 @0xFFE8 {
+        bytes 4;
+        field DES_1         @0    { bits 3; }   # bits[2:0]
+        field JEDEC         @3    { bits 1; }   # bit[3]
+        field ARCHREV       @4    { bits 4; }   # bits[7:4]
+        field RESERVED_37   @8    { bits 24; }  # bits[31:8]
+    }
+
+    # ============================================================
+    # 0xFFEC: GITS_PIDR3 - Peripheral ID 3 Register (RO, 32-bit, Reset 0x00)
+    # ============================================================
+    register GITS_PIDR3 @0xFFEC {
+        bytes 4;
+        field CMOD          @0    { bits 4; }   # bits[3:0]
+        field REVAND        @4    { bits 4; }   # bits[7:4]
+        field RESERVED_38   @8    { bits 24; }  # bits[31:8]
+    }
+
+    # ============================================================
+    # 0xFFF0: GITS_CIDR0 - Component ID 0 Register (RO, 32-bit, Reset 0x0D)
+    # ============================================================
+    register GITS_CIDR0 @0xFFF0 {
+        bytes 4;
+        field PRMBL_0       @0    { bits 8; }   # bits[7:0]
+        field RESERVED_39   @8    { bits 24; }  # bits[31:8]
+    }
+
+    # ============================================================
+    # 0xFFF4: GITS_CIDR1 - Component ID 1 Register (RO, 32-bit, Reset 0xF0)
+    # ============================================================
+    register GITS_CIDR1 @0xFFF4 {
+        bytes 4;
+        field PRMBL_1       @0    { bits 4; }   # bits[3:0]
+        field CLASS         @4    { bits 4; }   # bits[7:4]
+        field RESERVED_40   @8    { bits 24; }  # bits[31:8]
+    }
+
+    # ============================================================
+    # 0xFFF8: GITS_CIDR2 - Component ID 2 Register (RO, 32-bit, Reset 0x05)
+    # ============================================================
+    register GITS_CIDR2 @0xFFF8 {
+        bytes 4;
+        field PRMBL_2       @0    { bits 8; }   # bits[7:0]
+        field RESERVED_41   @8    { bits 24; }  # bits[31:8]
+    }
+
+    # ============================================================
+    # 0xFFFC: GITS_CIDR3 - Component ID 3 Register (RO, 32-bit, Reset 0xB1)
+    # ============================================================
+    register GITS_CIDR3 @0xFFFC {
+        bytes 4;
+        field PRMBL_3       @0    { bits 8; }   # bits[7:0]
+        field RESERVED_42   @8    { bits 24; }  # bits[31:8]
+    }
+}
+
+system its_ctl_top {
+  bytes 4;
+  block gits_its_ctrl @'h0;
+}

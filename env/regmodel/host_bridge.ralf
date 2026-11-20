@@ -1,0 +1,94 @@
+block host_bridge {
+    endian little;
+    bytes 4;
+
+    register ECAM_CTRL @ 'h000 {
+        field cfg_enable @0 { bits 1; access rw; reset 1'h0; }
+        field cfg_unmatched_okay @1 { bits 1; access rw; reset 1'h1; }
+        field rsv @2 { bits 30; access ro; reset 30'h0; }
+    }
+
+    register ECAM_BASE_HI20 @ 'h004 {
+        field cfg_ecam_base_hi20 @0 { bits 20; access rw; reset 20'h0; }
+        field rsv @20 { bits 12; access ro; reset 12'h0; }
+    }
+
+    register ECAM_TIMEOUT @ 'h008 {
+        field cfg_timeout_cycles @0 { bits 32; access rw; reset 32'h0; }
+    }
+
+    register RAW_DBI_CTRL @ 'h00c {
+        field cfg_raw_dbi_enable @0 { bits 1; access rw; reset 20'h0; }
+        field rsv @1 { bits 31; access ro; reset 31'h0; }
+    }
+
+    register RAW_DBI_BASE_HI24 @ 'h010 {
+        field cfg_raw_dbi_base_hi24 @0 { bits 24; access rw; reset 24'h0; }
+        field rsv @24 { bits 8; access ro; reset 8'h0; }
+    }
+
+    register RP0_CFG @ 'h020 {
+        field cfg_rp0_valid @0 { bits 1; access rw; reset 1'h0; }
+        field rsv_0 @1 { bits 1; access ro; reset 1'h0; }
+        field cfg_rp0_device @2 { bits 5; access rw; reset 5'h0; }
+        field rsv_1 @7 { bits 1; access ro; reset 1'h0; }
+        field cfg_rp0_primary @8 { bits 8; access rw; reset 8'h0; }
+        field cfg_rp0_secondary @16 { bits 8; access rw; reset 8'h0; }
+        field cfg_rp0_subordinate @24 { bits 8; access rw; reset 8'h0; }
+    }
+
+    register RP0_ROUTE @ 'h024 {
+        field cfg_rp0_route_hi20 @0 { bits 20; access rw; reset 20'h0; }
+        field rsv @20 { bits 12; access ro; reset 12'h0; }
+    }
+
+    register RP1_CFG @ 'h030 {
+        field cfg_rp1_valid @0 { bits 1; access rw; reset 1'h0; }
+        field rsv_0 @1 { bits 1; access ro; reset 1'h0; }
+        field cfg_rp1_device @2 { bits 5; access rw; reset 5'h0; }
+        field rsv_1 @7 { bits 1; access ro; reset 1'h0; }
+        field cfg_rp1_primary @8 { bits 8; access rw; reset 8'h0; }
+        field cfg_rp1_secondary @16 { bits 8; access rw; reset 8'h0; }
+        field cfg_rp1_subordinate @24 { bits 8; access rw; reset 8'h0; }
+    }
+
+    register RP1_ROUTE @ 'h034 {
+        field cfg_rp1_route_hi20 @0 { bits 20; access rw; reset 20'h0; }
+        field rsv @20 { bits 12; access ro; reset 12'h0; }
+    }
+
+    register RP2_CFG @ 'h040 {
+        field cfg_rp2_valid @0 { bits 1; access rw; reset 1'h0; }
+        field rsv_0 @1 { bits 1; access ro; reset 1'h0; }
+        field cfg_rp2_device @2 { bits 5; access rw; reset 5'h0; }
+        field rsv_1 @7 { bits 1; access ro; reset 1'h0; }
+        field cfg_rp2_primary @8 { bits 8; access rw; reset 8'h0; }
+        field cfg_rp2_secondary @16 { bits 8; access rw; reset 8'h0; }
+        field cfg_rp2_subordinate @24 { bits 8; access rw; reset 8'h0; }
+    }
+
+    register RP2_ROUTE @ 'h044 {
+        field cfg_rp2_route_hi20 @0 { bits 20; access rw; reset 20'h0; }
+        field rsv @20 { bits 12; access ro; reset 12'h0; }
+    }
+
+    register RP3_CFG @ 'h050 {
+        field cfg_rp3_valid @0 { bits 1; access rw; reset 1'h0; }
+        field rsv_0 @1 { bits 1; access ro; reset 1'h0; }
+        field cfg_rp3_device @2 { bits 5; access rw; reset 5'h0; }
+        field rsv_1 @7 { bits 1; access ro; reset 1'h0; }
+        field cfg_rp3_primary @8 { bits 8; access rw; reset 8'h0; }
+        field cfg_rp3_secondary @16 { bits 8; access rw; reset 8'h0; }
+        field cfg_rp3_subordinate @24 { bits 8; access rw; reset 8'h0; }
+    }
+
+    register RP3_ROUTE @ 'h054 {
+        field cfg_rp3_route_hi20 @0 { bits 20; access rw; reset 20'h0; }
+        field rsv @20 { bits 12; access ro; reset 12'h0; }
+    }
+}
+
+system host_bridge_top {
+    bytes 4;
+    block host_bridge @'h0;
+}

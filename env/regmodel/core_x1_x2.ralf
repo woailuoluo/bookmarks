@@ -1,0 +1,282 @@
+
+    register X1_X2_APP_PM_CTRL @ 'h000 {
+        field x1_x2_app_req_entr_l1 @1 { bits 1; access rw; reset 1'h0; }
+        field x1_x2_app_margining_ready @15 { bits 1; access rw; reset 1'h0; }
+        field x1_x2_app_margining_software_ready @16 { bits 1; access rw; reset 1'h0; }
+        field x1_x2_app_ras_des_tba_ctrl @17 { bits 2; access rw; reset 2'h0; }
+        field x1_x2_app_ras_des_sd_hold_ltssm @19 { bits 1; access rw; reset 1'h0; }
+        field x1_x2_app_dev_num @20 { bits 8; access rw; reset 8'h0; }
+        field rsv @28 { bits 4; access ro; reset 4'h0; }
+    }
+
+    register X1_X2_APP_BUS_NUM @ 'h004 {
+        field x1_x2_app_bus_num @0 { bits 8; access rw; reset 8'h0; }
+        field rsv @8 { bits 24; access ro; reset 24'h0; }
+    }
+
+    register X1_X2_VENDOR_MSG_CTRL @ 'h008 {
+        field x1_x2_ven_msg_req @0 { bits 1; access rw; reset 1'h0; }
+        field rsv @1 { bits 31; access ro; reset 31'h0; }
+    }
+
+    register X1_X2_APP_LTR_STATUS @ 'h00C {
+        field x1_x2_app_ltr_latency @0 { bits 32; access ro; reset 32'h0; }
+    }
+
+    register X1_X2_DEBUG_INFO_EI @ 'h010 {
+        field x1_x2_cxpl_debug_info_ei @0 { bits 16; access ro; reset 16'h0; }
+        field rsv @16 { bits 16; access ro; reset 16'h0; }
+    }
+
+    register X1_X2_DEBUG_INFO0 @ 'h014 {
+        field x1_x2_cxpl_debug_info_lo @0 { bits 32; access ro; reset 32'h0; }
+    }
+
+    register X1_X2_DEBUG_INFO1 @ 'h018 {
+        field x1_x2_cxpl_debug_info_hi @0 { bits 32; access ro; reset 32'h0; }
+    }
+
+    register X1_X2_DIAG_DEBUG_SEL @ 'h01C {
+        field x1_x2_debug_sel @0 { bits 5; access rw; reset 5'h0; }
+        field rsv @5 { bits 27; access ro; reset 27'h0; }
+    }
+
+    register X1_X2_DIAG_STATUS_DATA @ 'h020 {
+        field x1_x2_diag_status_bus_sel_data @0 { bits 32; access ro; reset 32'h0; }
+    }
+
+    register X1_X2_LINK_STATUS @ 'h024 {
+        field x1_x2_rdlh_link_up @0 { bits 1; access ro; reset 1'h0; }
+        field x1_x2_smlh_link_up @1 { bits 1; access ro; reset 1'h0; }
+        field x1_x2_smlh_ltssm_state @2 { bits 6; access ro; reset 6'h0; }
+        field x1_x2_smlh_ltssm_state_rcvry_eq @8 { bits 1; access ro; reset 1'h0; }
+        field x1_x2_smlh_req_rst_not @9 { bits 1; access ro; reset 1'h0; }
+        field x1_x2_cfg_neg_link_width @10 { bits 5; access ro; reset 5'h0; }
+        field x1_x2_pm_curnt_state @16 { bits 3; access ro; reset 3'h0; }
+        field rsv @19 { bits 13; access ro; reset 13'h0; }
+    }
+
+    register X1_X2_PM_STATUS @ 'h028 {
+        field x1_x2_pm_dstate @0 { bits 3; access ro; reset 3'h0; }
+        field x1_x2_pm_pme_en @3 { bits 1; access ro; reset 1'h0; }
+        field x1_x2_pm_linkst_in_l0s @4 { bits 1; access ro; reset 1'h0; }
+        field x1_x2_pm_linkst_in_l1 @5 { bits 1; access ro; reset 1'h0; }
+        field x1_x2_pm_linkst_in_l1sub @6 { bits 1; access ro; reset 1'h0; }
+        field x1_x2_pm_linkst_in_l2 @7 { bits 1; access ro; reset 1'h0; }
+        field x1_x2_pm_linkst_in_l23rdy @8 { bits 1; access ro; reset 1'h0; }
+        field x1_x2_pm_linkst_l2_exit @9 { bits 1; access ro; reset 1'h0; }
+        field x1_x2_pm_l1sub_state @10 { bits 3; access ro; reset 3'h0; }
+        field x1_x2_pm_aspm_l1_enter_ready @13 { bits 1; access ro; reset 1'h0; }
+        field x1_x2_pm_l1_entry_started @14 { bits 1; access ro; reset 1'h0; }
+        field x1_x2_pm_xtlh_block_tlp @15 { bits 1; access ro; reset 1'h0; }
+        field x1_x2_pm_status @16 { bits 16; access ro; reset 16'h0; }
+    }
+
+    register X1_X2_ERR_INT_STATUS @ 'h02C {
+        field x1_x2_radm_correctable_err_sts @0 { bits 1; access w1c; reset 1'h0; }
+        field x1_x2_radm_nonfatal_err_sts @1 { bits 1; access w1c; reset 1'h0; }
+        field x1_x2_radm_fatal_err_sts @2 { bits 1; access w1c; reset 1'h0; }
+        field x1_x2_radm_cpl_timeout_sts @3 { bits 1; access w1c; reset 1'h0; }
+        field x1_x2_radm_qoverflow_sts @4 { bits 1; access w1c; reset 1'h0; }
+        field x1_x2_rtlh_fc_overflow_err_sts @5 { bits 1; access w1c; reset 1'h0; }
+        field x1_x2_trgt_cpl_timeout_sts @6 { bits 1; access w1c; reset 1'h0; }
+        field x1_x2_surprise_down_err_sts @7 { bits 1; access w1c; reset 1'h0; }
+        field x1_x2_cfg_uncor_internal_err_sts_latched @8 { bits 1; access w1c; reset 1'h0; }
+        field x1_x2_cfg_rcvr_overflow_err_sts_latched @9 { bits 1; access w1c; reset 1'h0; }
+        field x1_x2_cfg_fc_protocol_err_sts_latched @10 { bits 1; access w1c; reset 1'h0; }
+        field x1_x2_cfg_mlf_tlp_err_sts_latched @11 { bits 1; access w1c; reset 1'h0; }
+        field x1_x2_cfg_dl_protocol_err_sts_latched @12 { bits 1; access w1c; reset 1'h0; }
+        field x1_x2_cfg_ecrc_err_sts_latched @13 { bits 1; access w1c; reset 1'h0; }
+        field x1_x2_cfg_corrected_internal_err_sts_latched @14 { bits 1; access w1c; reset 1'h0; }
+        field x1_x2_cfg_bad_dllp_err_sts_latched @15 { bits 1; access w1c; reset 1'h0; }
+        field x1_x2_cfg_bad_tlp_err_sts_latched @16 { bits 1; access w1c; reset 1'h0; }
+        field x1_x2_cfg_rcvr_err_sts_latched @17 { bits 1; access w1c; reset 1'h0; }
+        field x1_x2_cfg_advisory_nf_sts_latched @18 { bits 1; access w1c; reset 1'h0; }
+        field x1_x2_cfg_hdr_log_overflow_sts_latched @19 { bits 1; access w1c; reset 1'h0; }
+        field rsv @20 { bits 12; access ro; reset 12'h0; }
+    }
+
+    register X1_X2_ERR_INT_MASK @ 'h030 {
+        field x1_x2_err_int_mask @0 { bits 20; access rw; reset 20'hFFFFF; }
+        field rsv @20 { bits 12; access ro; reset 12'h0; }
+    }
+
+    register X1_X2_LINK_PM_INT_STATUS @ 'h034 {
+        field x1_x2_link_up_chg_sts @0 { bits 1; access w1c; reset 1'h0; }
+        field x1_x2_cfg_link_eq_req_int_sts @1 { bits 1; access w1c; reset 1'h0; }
+        field x1_x2_usp_eq_redo_executed_int_sts @2 { bits 1; access w1c; reset 1'h0; }
+        field x1_x2_cfg_link_auto_bw_int_sts @3 { bits 1; access w1c; reset 1'h0; }
+        field x1_x2_cfg_bw_mgt_int_sts @4 { bits 1; access w1c; reset 1'h0; }
+        field x1_x2_cfg_pme_int_sts @5 { bits 1; access w1c; reset 1'h0; }
+        field x1_x2_radm_pm_to_ack_sts @6 { bits 1; access w1c; reset 1'h0; }
+        field x1_x2_radm_pm_turnoff_sts @7 { bits 1; access w1c; reset 1'h0; }
+        field x1_x2_hp_int_sts @8 { bits 1; access w1c; reset 1'h0; }
+        field x1_x2_hp_pme_sts @9 { bits 1; access w1c; reset 1'h0; }
+        field x1_x2_radm_vendor_msg_sts @10 { bits 1; access w1c; reset 1'h0; }
+        field x1_x2_radm_msg_ltr_sts @11 { bits 1; access w1c; reset 1'h0; }
+        field rsv @12 { bits 20; access ro; reset 20'h0; }
+    }
+
+    register X1_X2_LINK_PM_INT_MASK @ 'h038 {
+        field x1_x2_link_pm_int_mask @0 { bits 12; access rw; reset 12'hFFF; }
+        field rsv @12 { bits 20; access ro; reset 20'h0; }
+    }
+
+    register X1_X2_VENDOR_MSG_PAYLOAD_00 @ 'h03C {
+        field x1_x2_ven_msg_fmt @0 { bits 2; access rw; reset 2'h0; }
+        field x1_x2_ven_msg_type @2 { bits 5; access rw; reset 5'h0; }
+        field x1_x2_ven_msg_tc @7 { bits 3; access rw; reset 3'h0; }
+        field x1_x2_ven_msg_td @10 { bits 1; access rw; reset 1'h0; }
+        field x1_x2_ven_msg_ep @11 { bits 1; access rw; reset 1'h0; }
+        field x1_x2_ven_msg_attr @12 { bits 2; access rw; reset 2'h0; }
+        field x1_x2_ven_msg_len @15 { bits 10; access rw; reset 10'h0; }
+        field x1_x2_ven_msg_func_num @25 { bits 3; access rw; reset 3'h0; }
+        field rsv @28 { bits 4; access ro; reset 4'h0; }
+    }
+
+    register X1_X2_VENDOR_MSG_PAYLOAD_01 @ 'h040 {
+        field x1_x2_ven_msg_tag @0 { bits 10; access rw; reset 10'h0; }
+        field x1_x2_ven_msg_code @10 { bits 8; access rw; reset 8'h0; }
+        field rsv @18 { bits 14; access ro; reset 14'h0; }
+    }
+
+    register X1_X2_VENDOR_MSG_PAYLOAD_02 @ 'h044 {
+        field x1_x2_ven_msg_data_lo @0 { bits 32; access rw; reset 32'h0; }
+    }
+
+    register X1_X2_VENDOR_MSG_PAYLOAD_03 @ 'h048 {
+        field x1_x2_ven_msg_data_hi @0 { bits 32; access rw; reset 32'h0; }
+    }
+
+    register X1_X2_HOTPLUG_SYS_CTRL_00 @ 'h04C {
+        field x1_x2_sys_atten_button_pressed @0 { bits 1; access rw; reset 1'h0; }
+        field x1_x2_sys_pre_det_state @1 { bits 1; access rw; reset 1'h0; }
+        field x1_x2_sys_mrl_sensor_state @2 { bits 1; access rw; reset 1'h0; }
+        field x1_x2_sys_pwr_fault_det @3 { bits 1; access rw; reset 1'h0; }
+        field x1_x2_sys_eml_interlock_engaged @4 { bits 1; access rw; reset 1'h0; }
+        field rsv @5 { bits 27; access ro; reset 27'h0; }
+    }
+
+    register X1_X2_EXP_ROM_PTM_CTRL_00 @ 'h050 {
+        field x1_x2_phy_cfg_status @0 { bits 32; access rw; reset 32'h0; }
+    }
+
+    register X1_X2_EXP_ROM_PTM_CTRL_01 @ 'h054 {
+        field x1_x2_exp_rom_validation_status @0 { bits 3; access rw; reset 3'h0; }
+        field x1_x2_exp_rom_validation_details @3 { bits 4; access rw; reset 4'h0; }
+        field rsv @7 { bits 25; access ro; reset 25'h0; }
+    }
+
+    register X1_X2_EXP_ROM_PTM_CTRL_02 @ 'h058 {
+        field x1_x2_ptm_external_master_time_lo @0 { bits 32; access rw; reset 32'h0; }
+    }
+
+    register X1_X2_EXP_ROM_PTM_CTRL_03 @ 'h05C {
+        field x1_x2_ptm_external_master_time_hi @0 { bits 32; access rw; reset 32'h0; }
+    }
+
+    register X1_X2_APP_PULSE_CTRL @ 'h060 {
+        field x1_x2_apps_pm_xmt_turnoff @0 { bits 1; access rw; reset 1'h0; }
+        field x1_x2_app_unlock_msg @1 { bits 1; access rw; reset 1'h0; }
+        field x1_x2_app_obff_idle_msg_req @2 { bits 1; access rw; reset 1'h0; }
+        field x1_x2_app_obff_obff_msg_req @3 { bits 1; access rw; reset 1'h0; }
+        field x1_x2_app_obff_cpu_active_msg_req @4 { bits 1; access rw; reset 1'h0; }
+        field x1_x2_app_init_rst @5 { bits 1; access rw; reset 1'h0; }
+        field x1_x2_sys_mrl_sensor_chged @6 { bits 1; access rw; reset 1'h0; }
+        field x1_x2_sys_pre_det_chged @7 { bits 1; access rw; reset 1'h0; }
+        field x1_x2_sys_cmd_cpled_int @8 { bits 1; access rw; reset 1'h0; }
+        field x1_x2_exp_rom_validation_status_strobe @9 { bits 1; access rw; reset 1'h0; }
+        field x1_x2_exp_rom_validation_details_strobe @10 { bits 1; access rw; reset 1'h0; }
+        field x1_x2_ptm_external_master_strobe @11 { bits 1; access rw; reset 1'h0; }
+        field rsv @12 { bits 20; access ro; reset 20'h0; }
+    }
+
+    register X1_X2_RESET_REQ_INT_STATUS @ 'h064 {
+        field x1_x2_smlh_req_rst_int @0 { bits 1; access w1c; reset 1'h0; }
+        field x1_x2_link_req_rst_int @1 { bits 1; access w1c; reset 1'h0; }
+        field rsv @2 { bits 30; access ro; reset 30'h0; }
+    }
+
+    register X1_X2_RESET_REQ_INT_MASK @ 'h068 {
+        field x1_x2_reset_req_int_mask @0 { bits 2; access rw; reset 2'h3; }
+        field rsv @2 { bits 30; access ro; reset 30'h0; }
+    }
+
+    register X1_X2_RADM_INTX_STATUS @ 'h06C {
+        field x1_x2_radm_inta_level @0 { bits 1; access ro; reset 1'h0; }
+        field x1_x2_radm_intb_level @1 { bits 1; access ro; reset 1'h0; }
+        field x1_x2_radm_intc_level @2 { bits 1; access ro; reset 1'h0; }
+        field x1_x2_radm_intd_level @3 { bits 1; access ro; reset 1'h0; }
+        field rsv @4 { bits 28; access ro; reset 28'h0; }
+    }
+
+    register X1_X2_RADM_INTX_MASK @ 'h070 {
+        field x1_x2_radm_intx_mask @0 { bits 4; access rw; reset 4'hF; }
+        field rsv @4 { bits 28; access ro; reset 28'h0; }
+    }
+
+    register X1_X2_CORE_INT_STATUS @ 'h074 {
+        field x1_x2_err_int @0 { bits 1; access ro; reset 1'h0; }
+        field x1_x2_link_pm_int @1 { bits 1; access ro; reset 1'h0; }
+        field x1_x2_legacy_intx_int @2 { bits 1; access ro; reset 1'h0; }
+        field x1_x2_reset_req_int @3 { bits 1; access ro; reset 1'h0; }
+        field rsv @4 { bits 28; access ro; reset 28'h0; }
+    }
+
+    register X1_X2_CORE_INT_MASK @ 'h078 {
+        field x1_x2_core_int_mask @0 { bits 4; access rw; reset 4'hF; }
+        field rsv @4 { bits 28; access ro; reset 28'h0; }
+    }
+
+    register X1_X2_APP_DBI_CTRL @ 'h07C {
+        field x1_x2_app_dbi_ro_wr_disable @0 { bits 1; access rw; reset 1'h0; }
+        field x1_x2_cdm_reg_chk_test_en @1 { bits 1; access rw; reset 1'h0; }
+        field x1_x2_occap_reg_err_test_en @2 { bits 1; access rw; reset 1'h0; }
+        field rsv @3 { bits 29; access ro; reset 29'h0; }
+    }
+
+    register X1_X2_EXT_ERR_INT_STATUS @ 'h080 {
+        field x1_x2_app_parity_errs_0 @0 { bits 1; access w1c; reset 1'h0; }
+        field x1_x2_app_parity_errs_1 @1 { bits 1; access w1c; reset 1'h0; }
+        field x1_x2_app_parity_errs_2 @2 { bits 1; access w1c; reset 1'h0; }
+        field x1_x2_cdm_reg_chk_logic_err @3 { bits 1; access w1c; reset 1'h0; }
+        field x1_x2_cdm_reg_chk_cmp_err @4 { bits 1; access w1c; reset 1'h0; }
+        field x1_x2_cdm_out_cmp_logic_err @5 { bits 1; access w1c; reset 1'h0; }
+        field x1_x2_cdm_out_cmp_err @6 { bits 1; access w1c; reset 1'h0; }
+        field x1_x2_occap_logic_err @7 { bits 1; access w1c; reset 1'h0; }
+        field x1_x2_occap_reg_cmp_err @8 { bits 1; access w1c; reset 1'h0; }
+        field x1_x2_if_timeout_status @9 { bits 1; access w1c; reset 1'h0; }
+        field rsv @10 { bits 22; access ro; reset 22'h0; }
+    }
+
+    register X1_X2_EXT_ERR_INT_MASK @ 'h084 {
+        field x1_x2_ext_err_int_mask @0 { bits 10; access rw; reset 10'h3FF; }
+        field rsv @10 { bits 22; access ro; reset 22'h0; }
+    }
+
+    register X1_X2_AER_PM_INT_STATUS @ 'h088 {
+        field x1_x2_cfg_aer_rc_err_int @0 { bits 1; access w1c; reset 1'h0; }
+        field x1_x2_cfg_aer_rc_err_msi @1 { bits 1; access w1c; reset 1'h0; }
+        field x1_x2_cfg_aer_int_msg_num @2 { bits 5; access ro; reset 5'h0; }
+        field x1_x2_cfg_sys_err_rc @7 { bits 1; access w1c; reset 1'h0; }
+        field x1_x2_cfg_send_cor_err @8 { bits 1; access w1c; reset 1'h0; }
+        field x1_x2_cfg_send_nf_err @9 { bits 1; access w1c; reset 1'h0; }
+        field x1_x2_cfg_send_f_err @10 { bits 1; access w1c; reset 1'h0; }
+        field x1_x2_cfg_pme_msi @11 { bits 1; access w1c; reset 1'h0; }
+        field rsv @12 { bits 20; access ro; reset 20'h0; }
+    }
+
+    register X1_X2_AER_PM_INT_MASK @ 'h08C {
+        field x1_x2_aer_pm_int_mask @0 { bits 12; access rw; reset 12'hFFF; }
+        field rsv @12 { bits 20; access ro; reset 20'h0; }
+    }
+
+    register X1_X2_WIDTH_ALIGNMENT_NOTE @ 'h090 {
+        field app_dev_num @0 { bits 5; access ro; reset 5'h0; }
+        field ven_msg_fmt @5 { bits 2; access ro; reset 2'h0; }
+        field ven_msg_tc @7 { bits 3; access ro; reset 3'h0; }
+        field ven_msg_attr @10 { bits 2; access ro; reset 2'h0; }
+        field exp_rom_validation_status @12 { bits 3; access ro; reset 3'h0; }
+        field exp_rom_validation_details @15 { bits 4; access ro; reset 4'h0; }
+        field rsv @19 { bits 13; access ro; reset 13'h0; }
+    }
